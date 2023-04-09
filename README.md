@@ -1,6 +1,6 @@
 # Formatador de consultas SQL dinâmicas parametrizadas
 
-Este projeto simples que tem como objetivo de converter exec sp_executesql em uma consulta mais legível. 
+Este é um projeto simples que tem como objetivo de converter exec sp_executesql em uma consulta mais legível. 
 
 O código está escrito em JavaScript puro, sem a utilização de frameworks, e pode ser facilmente modificado.
 
