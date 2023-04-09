@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="br">
+<head>
+    <meta charset="UTF-8">
+    <title>Formatador de Consulta Dinâmica Parametrizada</title>
+</head>
+<body>
+<h1>Formatador de Consulta Dinâmica Parametrizada</h1>
+<form>
+    <label for="text-input">Insira a consulta a ser formatada:</label><br>
+    <textarea id="text-input" name="text-input" rows="10" cols="80"></textarea><br>
+    <button id="format-button" type="button">Formatar Consulta</button>
+</form>
+<div id="output-container"></div>
+<script>
+    function normalizeQuery(query) {
+        return query.replace(/''/g, "'");
+    }
+
+    function parseQuery(parameterDeclaration, parameterValue, query) {
+        let parameters = parameterDeclaration.split(",");
+        let result = "DECLARE " + parameterDeclaration + ";\n"; // adiciona o ponto e vírgula aqui
+
+        parameterValue.split(",").forEach((value, index) => {
+            value = value.trim();
+
+            if (value[0] !== "@") {
+                value = parameters[index].split(" ")[0] + "=" + value;
+            }
+            result += "SET " + value + ";\n";
+        });
+
+        result += "\n" + normalizeQuery(query) + "\n";
+
+        return result;
+    }
+
+    const regex = /(?:\bexec|\bexecute)*\s*sp_executesql\s+N'([\s\S]*?)',\s*N'(@[\s\S]*?)',\s*([\s\S]*?$)/gmi;
+
+    const textInput = document.getElementById("text-input");
+    const formatButton = document.getElementById("format-button");
+    const outputContainer = document.getElementById("output-container");
+
+    formatButton.addEventListener("click", () => {
+        const text = textInput.value;
+
+        let replacedText = text;
+        let match = regex.exec(text);
+
+        while (match) {
+            const newText = parseQuery(match[2], match[3], match[1]);
+            replacedText = replacedText.replace(match[0], newText);
+
+            match = regex.exec(text);
+        }
+
+        outputContainer.innerText = replacedText;
+    });
+
+
+
+</script>
+</body>
+</html>
