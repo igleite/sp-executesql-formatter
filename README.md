@@ -26,7 +26,7 @@ A codificação foi escrita em JavaScript puro, sem a utilização de frameworks
 
 ## Referências
  - [mattwoberts/execsqlformat](https://github.com/mattwoberts/execsqlformat)
- - [PejmanNik/sqlops-spexecutesql-to-sql](https://github.com/igleite/sqlops-spexecutesql-to-sql)
+ - [PejmanNik/sqlops-spexecutesql-to-sql](https://github.com/PejmanNik/sqlops-spexecutesql-to-sql)
 
 
 ## Licença
