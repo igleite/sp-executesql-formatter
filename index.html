@@ -9,7 +9,8 @@
 <form>
     <label for="text-input">Insira a consulta a ser formatada:</label><br>
     <textarea id="text-input" name="text-input" rows="10" cols="80"></textarea><br>
-    <button id="format-button" type="button">Formatar Consulta</button>
+    <button id="format-button" type="button" style="margin: 10px 0 10px 0;">Formatar Consulta</button>
+    <button id="get-query-button" type="button" style="margin: 10px 0 10px 0;">Pegar Consulta Formatada</button>
 </form>
 <div id="output-container"></div>
 <script>
@@ -39,6 +40,7 @@
 
     const textInput = document.getElementById("text-input");
     const formatButton = document.getElementById("format-button");
+    const getQueryButton = document.getElementById("get-query-button");
     const outputContainer = document.getElementById("output-container");
 
     formatButton.addEventListener("click", () => {
@@ -57,8 +59,23 @@
         outputContainer.innerText = replacedText;
     });
 
+    getQueryButton.addEventListener("click", () => {
+        const formattedQuery = outputContainer.innerText;
+        copyToClipboard(formattedQuery);
+        alert("Consulta formatada copiada para a área de transferência.");
+    });
 
-
+    function copyToClipboard(text) {
+        const dummyElement = document.createElement('textarea');
+        dummyElement.value = text;
+        dummyElement.setAttribute('readonly', '');
+        dummyElement.style.position = 'absolute';
+        dummyElement.style.left = '-9999px';
+        document.body.appendChild(dummyElement);
+        dummyElement.select();
+        document.execCommand('copy');
+        document.body.removeChild(dummyElement);
+    }
 </script>
 </body>
 </html>
